@@ -9,7 +9,7 @@
 
 int main(int argc, char *argv[])
 {
-	char message[100];
+	char message[255];
 	int server, portNumber;
 	socklen_t len;
 	struct sockaddr_in servAdd;
@@ -48,4 +48,23 @@ int main(int argc, char *argv[])
 		fprintf(stderr, "connect() failed, exiting\n");
 		exit(3);
 	}
+	while(1)
+	{
+		if(recv(server, message, 255, 0) < 0)
+        	{
+				printf("[-]Error in receiving data.\n");
+			}
+		else
+			{
+				printf("Server: \t%s\n", message);
+			}
+		if(strcmp(message,"you can play now")==0)
+		{
+			dice = (int) time(&ss)%6 + 1;
+			printf("you got: %d", dice);
+			point=htonl(dice);
+			send(server,point,size,0);		
+		}
+	}
+	exit(0);
 }
