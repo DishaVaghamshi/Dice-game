@@ -25,12 +25,12 @@ int main(int argc, char *argv[])
 	}
     //for creation of socket
     if ((server=socket(AF_INET,SOCK_STREAM,0))<0){
-		fprintf(stderr, "[-] Cannot create socket\n");
+		fprintf(stderr, "Cannot create socket\n");
 		exit(1);
 	}
 	else
 	{
-		fprintf(stderr, "[+] Socket Created\n");
+		fprintf(stderr, "Socket Created\n");
 	}
 
     servAdd.sin_family = AF_INET;
@@ -50,9 +50,9 @@ int main(int argc, char *argv[])
 	}
 	while(1)
 	{
-		if(recv(server, message, 255, 0) < 0)
+		if (read(server, message, sizeof(message))<0)
         	{
-				printf("[-]Error in receiving data.\n");
+				printf("Error in receiving data.\n");
 			}
 		else
 			{
@@ -64,6 +64,14 @@ int main(int argc, char *argv[])
 			printf("you got: %d", dice);
 			point=htonl(dice);
 			send(server,point,size,0);		
+		}	
+		if(strcmp(message,"Game over: You won the game")==0)
+		{
+			printf("I won the game");
+		}
+		if(strcmp(message,"Game over: you lost the game")==0)
+		{
+			printf("lost the game");
 		}
 	}
 	exit(0);
