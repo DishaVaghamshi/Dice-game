@@ -52,18 +52,19 @@ int main(int argc, char *argv[])
 	{
 		if (read(server, message, sizeof(message))<0)
         	{
-				printf("Error in receiving data.\n");
+				fprintf(stderr, "read() error\n");
+				exit(0);
 			}
 		else
 			{
-				printf("Server: \t%s\n", message);
+				printf("Server: %s\n", message);
 			}
-		if(strcmp(message,"you can play now")==0)
+		if(strcmp(message,"You can play now")==0)
 		{
-			dice = (int) time(&ss)%6 + 1;
-			printf("you got: %d", dice);
+			dice = (int) time(&ss)%6+1;
+			printf("you got: %d \n", dice);
 			point=htonl(dice);
-			send(server,point,size,0);		
+			send(server,&point,size,0);		
 		}	
 		if(strcmp(message,"Game over: You won the game")==0)
 		{
