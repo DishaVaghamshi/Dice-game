@@ -9,7 +9,7 @@
 
 void players(int client1, int client2)
 {
-	int c1_points, c2_points;
+	int c1_points=0, c2_point=0,size=sizeof(int32_t);
 	int32_t c1_total_points, c2_total_points;
 	char buffer[255];
 	char msg[255];
@@ -18,7 +18,7 @@ void players(int client1, int client2)
 	{
 		//for c1_points of client1
 		sleep(1);
-		write(client1,"You can now play TOTO",100); 
+		write(client1,"You can play now",100); 
 		if(read(client1,&c1_total_points,size)<0)
 			printf("Read Error from client1");
 		c1_points+=ntohl(c1_total_points);
@@ -33,7 +33,7 @@ void players(int client1, int client2)
 		}
 		sleep(2);
 		//for c2_points of client2
-		write(client2,"You can now play TITI",100);
+		write(client2,"You can play now",100);
 		if(read(client2,&c2_total_points,size)<0)
 			printf("Read Error from Player 2");
 		c2_points+=ntohl(c2_total_points);
@@ -83,19 +83,19 @@ int main(int argc, char *argv[])
 	
 	if(listen(sd, 6) == 0)
     {
-		printf("[+]Listening...\n");
+		printf("Listening...\n");
 	}else
     {
-		printf("[-]Error in binding.\n");
+		printf("Error in binding.\n");
 	}
 	while(1)
 	{
 		client1=accept(sd,(struct sockaddr*)NULL,NULL);
-		write(client1,"you are TOTO(client1)...waiting for TITI(client2)....",100);
+		write(client1,"waiting for another player",100);
 		client2=accept(sd,(struct sockaddr*)NULL,NULL);
-		write(client1,"client2 has joined....game is starting...stay tuned:)",100);
-		write(client2,"you are TITI(clietn2),client1 has already joined...\n game is starting...stay tuned:)",100);
-		printf("game is starting");
+		write(client1,"player2 has joined....\n game is starting...",100);
+		write(client2,"player1 has already joined...\n game is starting...",100);
+		printf("game is starting\n");
 		if(fork()==0)
 		{
 			players(client1,client2);
