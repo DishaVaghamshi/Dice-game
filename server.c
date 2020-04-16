@@ -46,4 +46,17 @@ int main(int argc, char *argv[])
     {
 		printf("[-]Error in binding.\n");
 	}
+	while(1)
+	{
+		client1=accept(sd,(struct sockaddr*)NULL,NULL);
+		write(client1,"you are TOTO(client1)...waiting for TITI(client2)....",100);
+		client2=accept(sd,(struct sockaddr*)NULL,NULL);
+		write(client1,"client1 has joined....game is starting...stay tuned:)",100);
+		write(client2,"you are TITI(clietn2),client1 has already joined...\n game is starting...stay tuned:)",100);
+		printf("game is starting");
+		if(fork()==0)
+		{
+			players(client1,client2);
+		}
+	}
 }
