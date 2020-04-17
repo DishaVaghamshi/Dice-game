@@ -58,7 +58,6 @@ int main(int argc, char *argv[])
 	socklen_t len;
 	struct sockaddr_in servAdd;
 	int points;
-	int32_t conv_points;
 
     if(argc != 2)
     {
@@ -80,7 +79,7 @@ int main(int argc, char *argv[])
 	servAdd.sin_addr.s_addr = htonl(INADDR_ANY);
 	sscanf(argv[1], "%d", &portNumber);
 	servAdd.sin_port = htons((uint16_t)portNumber);
-	bind(sd, (struct sockaddr *) &servAdd,sizeof(servAdd));
+	bind(sd, (struct sockaddr *) &servAdd,sizeof(servAdd)); //assign local add to socket file descriptor sd
 	
 	if(listen(sd, 10) == 0)
     {

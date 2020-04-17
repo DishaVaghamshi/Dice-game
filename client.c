@@ -27,7 +27,8 @@ int main(int argc, char *argv[])
 		exit(0);
 	}
     //for creation of socket
-    if ((server=socket(AF_INET,SOCK_STREAM,0))<0){
+    if ((server=socket(AF_INET,SOCK_STREAM,0))<0)
+	{
 		fprintf(stderr, "failed to create socket\n");
 		exit(1);
 	}
