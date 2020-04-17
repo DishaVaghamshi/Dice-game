@@ -1,3 +1,6 @@
+// Name: Disha Vaghamshi
+// Student no: 105183727
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<netdb.h>
@@ -25,7 +28,7 @@ int main(int argc, char *argv[])
 	}
     //for creation of socket
     if ((server=socket(AF_INET,SOCK_STREAM,0))<0){
-		fprintf(stderr, "Cannot create socket\n");
+		fprintf(stderr, "failed to create socket\n");
 		exit(1);
 	}
 	else
@@ -38,16 +41,18 @@ int main(int argc, char *argv[])
 	servAdd.sin_port = htons((uint16_t)portNumber);
 
 	if(inet_pton(AF_INET, argv[1],
-		&servAdd.sin_addr) < 0){
-		fprintf(stderr, " inet_pton() has failed\n");
-		exit(2);
-	}
+		&servAdd.sin_addr) < 0)
+		{
+			fprintf(stderr, " inet_pton() has failed\n");
+			exit(2);
+		}
     //for connection
 	if(connect(server, (struct sockaddr *) &servAdd,
-		sizeof(servAdd))<0){
-		fprintf(stderr, "connect() failed, exiting\n");
-		exit(3);
-	}
+		sizeof(servAdd))<0)
+		{
+			fprintf(stderr, "connect() failed, exiting\n");
+			exit(3);
+		}
 	while(1)
 	{
 		if (read(server, message, sizeof(message))<0)
@@ -62,18 +67,25 @@ int main(int argc, char *argv[])
 		if(strcmp(message,"You can play now")==0)
 		{
 			dice = (int) time(&ss)%6+1;
-			printf("you got: %d \n", dice);
+			printf("---you got: %d--- \n", dice);
 			point=htonl(dice);
 			send(server,&point,size,0);		
 		}	
 		if(strcmp(message,"Game over: You won the game")==0)
 		{
 			printf("I won the game");
+			close(server);
+			exit(0);
+
 		}
-		if(strcmp(message,"Game over: you lost the game")==0)
+		else if(strcmp(message,"Game over: You lost the game")==0)
 		{
 			printf("lost the game");
+			close(server);
+			exit(0);
+
 		}
+		
 	}
 	exit(0);
 }
