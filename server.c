@@ -59,7 +59,6 @@ int main(int argc, char *argv[])
 	struct sockaddr_in servAdd;
 	int points;
 	int32_t conv_points;
-	int size = sizeof(conv_points);
 
     if(argc != 2)
     {
