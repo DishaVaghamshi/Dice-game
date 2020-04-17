@@ -73,14 +73,14 @@ int main(int argc, char *argv[])
 		}	
 		if(strcmp(message,"Game over: You won the game")==0)
 		{
-			printf("I won the game");
+			printf("I won the game\n");
 			close(server);
 			exit(0);
 
 		}
 		else if(strcmp(message,"Game over: You lost the game")==0)
 		{
-			printf("lost the game");
+			printf("lost the game\n");
 			close(server);
 			exit(0);
 

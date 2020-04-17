@@ -38,13 +38,13 @@ void players(int client1, int client2)
 		write(client2,buffer,255);
 		if(c1_points>=100)
 		{
-			write(client1,"Game over: You won the game",100);
-			write(client2,"Game over: You lost the game",100);
+			write(client1,"Game over: You won the game",255);
+			write(client2,"Game over: You lost the game",255);
 			break;
 		} else if(c2_points>=100)
 		{
-			write(client2,"Game over: You won the game",100);
-			write(client1,"Game over: You lost the game",100);
+			write(client2,"Game over: You won the game",255);
+			write(client1,"Game over: You lost the game",255);
 			break;
 		}
 	}
@@ -95,8 +95,8 @@ int main(int argc, char *argv[])
 		client1=accept(sd,(struct sockaddr*)NULL,NULL);
 		write(client1,"waiting for another player",100);
 		client2=accept(sd,(struct sockaddr*)NULL,NULL);
-		write(client1,"player2 has joined....\n game is starting...",100);
-		write(client2,"player1 has already joined...\n game is starting...",100);
+		write(client1,"player2 has joined....\ngame is starting...",100);
+		write(client2,"player1 has already joined...\ngame is starting...",100);
 		printf("game is starting\n");
 		if(fork()==0)
 		{
