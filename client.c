@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
 		if(strcmp(message,"You can play now")==0)
 		{
 			dice = (int) time(&ss)%6+1;
-			printf("---you got: %d--- \n", dice);
+			printf("\n---you got: %d--- \n", dice);
 			point=htonl(dice);
 			send(server,&point,size,0);		
 		}	
