@@ -1,3 +1,6 @@
+// Name: Disha Vaghamshi
+// Student no: 105183727
+
 #include<stdio.h>
 #include<sys/types.h>
 #include<sys/socket.h>
@@ -9,37 +12,37 @@
 
 void players(int client1, int client2)
 {
-	int c1_points=0, c2_point=0,size=sizeof(int32_t);
+	int c1_points=0, c2_points=0,size=sizeof(int32_t);
 	int32_t c1_total_points, c2_total_points;
 	char buffer[255];
-	char msg[255];
 
 	while(1)
 	{
 		//for c1_points of client1
 		sleep(1);
-		write(client1,"You can play now",100); 
+		write(client1,"You can play now",255); 
 		if(read(client1,&c1_total_points,size)<0)
 			printf("Read Error from client1");
 		c1_points+=ntohl(c1_total_points);
-		snprintf(buffer, 100, "Your Score is :: %d \nOpponent Score is :: %d\n\n", c1_points, c2_points);
-		write(client1,buffer,100);
+		snprintf(buffer, 255, "Your Score is: %d \nOpponent Score is: %d\n\n", c1_points, c2_points);
+		write(client1,buffer,255);
 		
+		
+		sleep(1);
+		//for c2_points of client2
+		write(client2,"You can play now",255);
+		if(read(client2,&c2_total_points,size)<0)
+			printf("Read Error from Player 2");
+		c2_points+=ntohl(c2_total_points);
+		snprintf(buffer, 255, "Your Score is: %d \nOpponent Score is: %d\n\n", c2_points, c1_points);
+		write(client2,buffer,255);
 		if(c1_points>=100)
 		{
 			write(client1,"Game over: You won the game",100);
 			write(client2,"Game over: You lost the game",100);
 			break;
-		}
-		sleep(2);
-		//for c2_points of client2
-		write(client2,"You can play now",100);
-		if(read(client2,&c2_total_points,size)<0)
-			printf("Read Error from Player 2");
-		c2_points+=ntohl(c2_total_points);
-		snprintf(buffer, 100, "Your Score is :: %d \nOpponent Score is :: %d\n\n", c2_points, c1_points);
-		write(client2,buffer,100);
-		if(c2_points>=100){
+		} else if(c2_points>=100)
+		{
 			write(client2,"Game over: You won the game",100);
 			write(client1,"Game over: You lost the game",100);
 			break;
@@ -51,7 +54,6 @@ void players(int client1, int client2)
 
 int main(int argc, char *argv[])
 {
-	//char *myTime;
 	int sd, client1,client2,portNumber;
 	socklen_t len;
 	struct sockaddr_in servAdd;
@@ -67,12 +69,12 @@ int main(int argc, char *argv[])
 
 	if((sd = socket(AF_INET, SOCK_STREAM, 0))<0)
     {
-		fprintf(stderr, "[-] Could not create socket\n");
+		fprintf(stderr, "failed to create socket\n");
 		exit(1);
 	}
 	else
     {
-		fprintf(stderr, "[+] Socket Created\n");
+		fprintf(stderr, "Socket Created\n");
 	}
 
 	servAdd.sin_family = AF_INET;
@@ -81,7 +83,7 @@ int main(int argc, char *argv[])
 	servAdd.sin_port = htons((uint16_t)portNumber);
 	bind(sd, (struct sockaddr *) &servAdd,sizeof(servAdd));
 	
-	if(listen(sd, 6) == 0)
+	if(listen(sd, 10) == 0)
     {
 		printf("Listening...\n");
 	}else
